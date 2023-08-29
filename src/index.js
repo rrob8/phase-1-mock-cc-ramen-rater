@@ -5,12 +5,14 @@ fetch(`http://localhost:3000/ramens`)
 .then(response => response.json())
 .then(data => {
     const ramenList = data
+    ramenToPage(data[0])
     renderRamen(data, ramenList)
 })
 )
 
 function renderRamen (data, ramenList) {
     console.log(data)
+    
     data.forEach( ramen => {
         
     
@@ -21,17 +23,14 @@ function renderRamen (data, ramenList) {
     image.id = ramen.id
     menu.append(image)
 
+
+
         image.addEventListener('click', (e) =>{
             
             for (ramen of ramenList) {
                 
                 if (ramen.id == e.target.id) {
-                    document.querySelector('.detail-image').src = ramen.image
-                    document.querySelector('.name').textContent = ramen.name
-                    document.querySelector('.restaurant').textContent = `Restaurant: ${ramen.restaurant}`
-                    document.getElementById('rating-display').textContent = ramen.rating
-                    document.getElementById('comment-display').textContent = ramen.comment
-
+                    ramenToPage(ramen)
                 }
             }
         })
@@ -76,3 +75,14 @@ form.addEventListener('submit',(e)=>{
 })
 
 })
+
+function ramenToPage (ramen) {
+    
+        document.querySelector('.detail-image').src = ramen.image
+        document.querySelector('.name').textContent = ramen.name
+        document.querySelector('.restaurant').textContent = `Restaurant: ${ramen.restaurant}`
+        document.getElementById('rating-display').textContent = ramen.rating
+        document.getElementById('comment-display').textContent = ramen.comment
+
+    
+}
